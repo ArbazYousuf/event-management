@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity,  } from "react-native";
 import { Calendar, CalendarList, Agenda, Arrow } from "react-native-calendars";
 
 export default class Calender extends Component {
@@ -18,6 +18,11 @@ export default class Calender extends Component {
             console.log("month changed", month);
           }}
         />
+        <View style={{display: "flex", justifyContent: "center", alignItems: "center", width: "100%"}}>
+          <TouchableOpacity style={{width: 200, height: 40, backgroundColor: "red", borderRadius: 50, padding: 2}}>
+            <View style={{backgroundColor: "white", width: 35, height: 35, borderRadius: 50}}></View>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
