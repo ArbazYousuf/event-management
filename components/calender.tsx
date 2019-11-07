@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { Calendar, CalendarList, Agenda, Arrow } from "react-native-calendars";
+import { Calendar } from "./module/react-native-calendars";
 
 export default class Calender extends Component {
   render() {
@@ -8,6 +8,33 @@ export default class Calender extends Component {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         {/* <Calendar /> */}
         <Calendar
+         
+          theme={{
+            backgroundColor: "#ffffff",
+            calendarBackground: "#ffffff",
+            headerBackgroundColor: "black",
+            textSectionTitleColor: "#b6c1cd",
+            selectedDayBackgroundColor: "#00adf5",
+            selectedDayTextColor: "#ffffff",
+            // headerBackgroundColor: "black",
+            todayTextColor: "#ffffff",
+            todayBackgroundColor: "#FFEA7D",
+            dayTextColor: "#2d4150",
+            textDisabledColor: "#d9e1e8",
+            arrowColor: "white",
+            // monthTextColor: "blue",
+            indicatorColor: "white",
+            textDayFontFamily: "monospace",
+            textMonthFontFamily: "monospace",
+            textDayHeaderFontFamily: "monospace",
+            textDayFontWeight: "500",
+            textMonthFontWeight: "bold",
+            textDayHeaderFontWeight: "300",
+            textDayFontSize: 16,
+            textMonthFontSize: 16,
+            textDayHeaderFontSize: 16,
+            monthTextColor: "#ffffff"
+          }}
           onDayPress={day => {
             console.log("selected day", day);
           }}
@@ -17,6 +44,10 @@ export default class Calender extends Component {
           onMonthChange={month => {
             console.log("month changed", month);
           }}
+          // theme={{
+          // selectedDayBackgroundColor: "#FFEA7D",
+          // selectedDayTextColor: '#ffffff',
+          // }}
         />
         <View
           style={{
@@ -36,7 +67,7 @@ export default class Calender extends Component {
               borderRadius: 50,
               flexDirection: "row",
               display: "flex",
-              padding: 2,
+              padding: 2
             }}
           >
             <View
@@ -82,7 +113,7 @@ export default class Calender extends Component {
               marginTop: 10,
               borderRadius: 50,
               flexDirection: "row",
-              display: "flex",
+              display: "flex"
             }}
           >
             <View
