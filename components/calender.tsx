@@ -113,6 +113,7 @@ export default class Calender extends Component {
                 <Text style={{ color: "gray", fontSize: 10 }}>12:44 am</Text>
               </View>
             </TouchableOpacity>
+            
             <TouchableOpacity
               style={{
                 width: 200,
@@ -181,8 +182,9 @@ export default class Calender extends Component {
                 >
                   <Text style={{ color: "gray", fontSize: 10 }}>12:44 am</Text>
                 </View>
+                </View>
             </TouchableOpacity>
-          </View>
+              </TouchableOpacity>
         </View>
       </LinearGradient>
         );
