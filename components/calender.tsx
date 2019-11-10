@@ -1,17 +1,41 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Calendar } from "./module/react-native-calendars";
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
+import * as firebase from "firebase";
+import * as moment from "moment";
+import { ActionSheet } from "native-base";
+import { Actions } from "react-native-router-flux";
 
 export default class Calender extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data1: []
+    };
+  }
+
+  componentDidMount() {
+    console.log(Actions)
+    firebase
+      .database()
+      .ref("/events/data/")
+      .on("value", snap => {
+        this.setState({
+          data: Object.values(snap.val())
+        });
+        console.log("data agya", this.state.data);
+      });
+  }
   render() {
     return (
       <LinearGradient
-        colors={['#6D79FF', '#46A8FF', '#23D2FF']}
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        colors={["#6D79FF", "#46A8FF", "#23D2FF"]}
+        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+      >
         {/* <Calendar /> */}
         <Calendar
-
           theme={{
             backgroundColor: "#ffffff",
             calendarBackground: "#ffffff",
@@ -40,6 +64,21 @@ export default class Calender extends Component {
           }}
           onDayPress={day => {
             console.log("selected day", day);
+            if (this.state.data) {
+              let data = this.state.data;
+              // this.setState({data1: []})
+              let myData = [];
+              let date = moment.utc(day.dateString).format("DD/MM/YYYY");
+              data.map(value => {
+                if (date == value.eventDate) {
+                  console.log("matched");
+                  myData.push(value);
+                  this.setState({
+                    data1: myData
+                  });
+                }
+              });
+            }
           }}
           onDayLongPress={day => {
             console.log("selected day", day);
@@ -47,10 +86,10 @@ export default class Calender extends Component {
           onMonthChange={month => {
             console.log("month changed", month);
           }}
-        // theme={{
-        // selectedDayBackgroundColor: "#FFEA7D",
-        // selectedDayTextColor: '#ffffff',
-        // }}
+          // theme={{
+          // selectedDayBackgroundColor: "#FFEA7D",
+          // selectedDayTextColor: '#ffffff',
+          // }}
         />
         <View
           style={{
@@ -66,127 +105,124 @@ export default class Calender extends Component {
               padding: 2
             }}
           >
-            <TouchableOpacity
-              style={{
-                width: 200,
-                height: 40,
-                backgroundColor: "rgba(255,255,255, 0.6)",
-                alignItems: "center",
-                marginTop: 10,
-                borderRadius: 50,
-                flexDirection: "row",
-                display: "flex",
-                padding: 2,
-              }}
-            >
-              <View
-                style={{
-                  backgroundColor: "white",
-                  width: 33,
-                  height: 33,
-                  borderRadius: 50,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginLeft: 2
-                }}
-              >
-                <Text style={{ color: "darkgray", fontSize: 14 }}> 01 </Text>
-              </View>
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginLeft: 20
-                }}
-              >
-                <Text style={{ color: "#249DEB", fontWeight: "400" }}>
-                  Event 1
-              </Text>
-              </View>
-              <View
-                style={{
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginLeft: 25
-                }}
-              >
-                <Text style={{ color: "gray", fontSize: 10 }}>12:44 am</Text>
-              </View>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={{
-                width: 200,
-                height: 40,
-                backgroundColor: "rgba(255,255,255, 0.6)",
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: 25
-              }}
-            >
-              <Text style={{ color: "gray", fontSize: 10 }}>12:44 am</Text>
-              {/* </View> */}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                width: 200,
-                height: 40,
-                backgroundColor: "rgba(255,255,255, 0.6)",
-                alignItems: "center",
-                marginTop: 10,
-                borderRadius: 50,
-                flexDirection: "row",
-                display: "flex"
-              }}
-            >
-              <View
-                style={{
-                  backgroundColor: "white",
-                  width: 33,
-                  height: 33,
-                  borderRadius: 50,
-                  flexDirection: "row",
-                  display: "flex",
-                }}
-              >
-                <View
+        
+
+            {this.state.data1.length ? (
+              this.state.data1.map(value => (
+                <TouchableOpacity
                   style={{
-                    backgroundColor: "white",
-                    width: 33,
-                    height: 33,
+                    width: 200,
+                    height: 40,
+                    backgroundColor: "rgba(255,255,255, 0.6)",
+                    alignItems: "center",
+                    marginTop: 10,
                     borderRadius: 50,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginLeft: 3
+                    flexDirection: "row",
+                    display: "flex"
                   }}
+                  onPress={() => Actions.addEmoji()}
                 >
-                  <Text style={{ color: "darkgray", fontSize: 14 }}> 01 </Text>
-                </View>
-                <View
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      width: 33,
+                      height: 33,
+                      borderRadius: 50,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginLeft: 3
+                    }}
+                  >
+                    <Text style={{ color: "darkgray", fontSize: 14 }}>
+                      {" "}
+                      01{" "}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 20
+                    }}
+                  >
+                    <Text style={{ color: "#249DEB", fontWeight: "400" }}>
+                      {value.eventName}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 45
+                    }}
+                  >
+                    <Text style={{ color: "gray", fontSize: 10 }}>
+                      {value.eventTime}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              ))
+            ) : (
+              this.state.data ? this.state.data.map((value) => {
+                return (
+                  <TouchableOpacity
                   style={{
+                    width: 200,
+                    height: 40,
+                    backgroundColor: "rgba(255,255,255, 0.6)",
                     alignItems: "center",
-                    justifyContent: "center",
-                    marginLeft: 20
+                    marginTop: 10,
+                    borderRadius: 50,
+                    flexDirection: "row",
+                    display: "flex"
                   }}
+                  onPress={() => Actions.addEmoji()}
                 >
-                  <Text style={{ color: "#249DEB", fontWeight: "400" }}>
-                    Event 1
-              </Text>
-                </View>
-                <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginLeft: 25
-                  }}
-                >
-                  <Text style={{ color: "gray", fontSize: 10 }}>12:44 am</Text>
-                </View>
-                </View>
-            </TouchableOpacity>
-              </TouchableOpacity>
+                  <View
+                    style={{
+                      backgroundColor: "white",
+                      width: 33,
+                      height: 33,
+                      borderRadius: 50,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginLeft: 3
+                    }}
+                  >
+                    <Text style={{ color: "darkgray", fontSize: 14 }}>
+                      {" "}
+                      01{" "}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 20
+                    }}
+                  >
+                    <Text style={{ color: "#249DEB", fontWeight: "400" }}>
+                      {value.eventName}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 45
+                    }}
+                  >
+                    <Text style={{ color: "gray", fontSize: 10 }}>
+                      {value.eventTime}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+                )
+              }) : <Text></Text>
+            )}
+          </TouchableOpacity>
         </View>
       </LinearGradient>
-        );
-      }
-    }
+    );
+  }
+}

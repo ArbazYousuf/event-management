@@ -12,7 +12,7 @@ export default class Routes extends React.Component {
                     <Scene key="addEmoji" component={AddEmoji} title="AddEmoji" hideNavBar={true} />
                     <Scene key="addEvent" component={AddEvent} title="Register" hideNavBar={true} />
                     <Scene key="todoList" component={TodoList} title="TodoList" hideNavBar={true} />
-                    <Scene key="calendar" component={Calender} title="Calender" hideNavBar={true} initial />
+                    <Scene key="calendar" component={Calender} title="Calender" hideNavBar={true}  initial/>
                 </Stack>
             </Router>
         );
