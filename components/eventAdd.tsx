@@ -5,9 +5,9 @@ import { Icon, Button } from "native-base";
 import { LinearGradient } from 'expo-linear-gradient';
 import { Header } from './Header'
 import { EventCard } from './EventCard';
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expoConstants from 'expo-constants';-image-picker';
 import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
+import 
 import { TouchableOpacity } from 'react-native';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import * as moment from "moment";

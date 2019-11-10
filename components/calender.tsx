@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Calendar } from "./module/react-native-calendars";
-import LinearGradient from 'react-native-linear-gradient';
+import {LinearGradient} from 'expo-linear-gradient';
 
 export default class Calender extends Component {
   render() {
@@ -114,19 +114,7 @@ export default class Calender extends Component {
               </View>
             </TouchableOpacity>
             
-            <TouchableOpacity
-              style={{
-                width: 200,
-                height: 40,
-                backgroundColor: "rgba(255,255,255, 0.6)",
-                alignItems: "center",
-                justifyContent: "center",
-                marginLeft: 25
-              }}
-            >
-              <Text style={{ color: "gray", fontSize: 10 }}>12:44 am</Text>
-              {/* </View> */}
-            </TouchableOpacity>
+        
             <TouchableOpacity
               style={{
                 width: 200,
@@ -139,16 +127,7 @@ export default class Calender extends Component {
                 display: "flex"
               }}
             >
-              <View
-                style={{
-                  backgroundColor: "white",
-                  width: 33,
-                  height: 33,
-                  borderRadius: 50,
-                  flexDirection: "row",
-                  display: "flex",
-                }}
-              >
+            
                 <View
                   style={{
                     backgroundColor: "white",
@@ -181,7 +160,6 @@ export default class Calender extends Component {
                   }}
                 >
                   <Text style={{ color: "gray", fontSize: 10 }}>12:44 am</Text>
-                </View>
                 </View>
             </TouchableOpacity>
               </TouchableOpacity>
