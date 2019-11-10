@@ -4,7 +4,6 @@ import { Calendar } from "./module/react-native-calendars";
 import { LinearGradient } from "expo-linear-gradient";
 import * as firebase from "firebase";
 import * as moment from "moment";
-import { ActionSheet } from "native-base";
 import { Actions } from "react-native-router-flux";
 
 export default class Calender extends Component {
