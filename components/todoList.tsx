@@ -11,16 +11,16 @@ export class TodoList extends React.Component {
     super(props);
 
     this.state = {
-    //   data: []
+      //   data: []
     };
   }
 
   componentDidMount() {
     firebase
       .database()
-      .ref("/events/data/")
+      .ref("events")
       .on("value", snap => {
-        this.setState({
+        if (snap.val()) this.setState({
           data: Object.values(snap.val())
         });
         console.log("data agya", this.state.data)
@@ -58,9 +58,9 @@ export class TodoList extends React.Component {
               Upcomming event
             </Text>
           </View>
-          {this.state.data 
+          {this.state.data
             ? this.state.data.map((value) => {
-               return <EventCard data={value}/>;
+              return <EventCard data={value} />;
 
             })
             : <Text>Loading</Text>}

@@ -1,7 +1,8 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { Icon } from "native-base";
-import {Actions} from "react-native-router-flux"
+import { Actions } from "react-native-router-flux"
+import * as moment from 'moment'
 
 export class EventCard extends React.Component {
   // console.log(this.props)
@@ -26,10 +27,10 @@ export class EventCard extends React.Component {
           }}
         >
           <Text style={{ fontSize: 20, fontWeight: "bold", color: "white" }}>
-            {this.props.data.eventName}
+            {this.props.data.Name}
           </Text>
           <Text style={{ fontSize: 10, color: "white" }}>
-            {this.props.data.eventDate}
+            {moment.utc(new Date(this.props.data.Date)).format("YYYY-MM-DD")}
           </Text>
         </View>
         <View
@@ -48,7 +49,7 @@ export class EventCard extends React.Component {
             }}
           >
             <Text style={{ color: "black", fontWeight: "bold" }}>
-              {this.props.data.eventTime}
+              {this.props.data.Time}
             </Text>
           </View>
         </View>

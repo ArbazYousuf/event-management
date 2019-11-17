@@ -31,11 +31,12 @@ export default class AddEvent extends React.Component {
       isDateTimePickerVisible: false,
       date: "",
       name: "",
-    //   date: "",
+      //   date: "",
       time: "",
       repeat: "",
       description: "",
       reminder: "",
+      realDate: "",
     };
   }
 
@@ -46,10 +47,10 @@ export default class AddEvent extends React.Component {
   };
 
   AddEvent = () => {
-    let { name, date, time, repeat, description, reminder, image } = this.state;
+    let { name, realDate, time, repeat, description, reminder, image } = this.state;
     if (
       name == "" &&
-      date == "" &&
+      realDate == "" &&
       time == "" &&
       repeat == "" &&
       description == "" &&
@@ -58,7 +59,7 @@ export default class AddEvent extends React.Component {
       alert("Kindly fill all field");
     } else if (name == "") {
       alert("Kindly add Event Name");
-    } else if (date == "") {
+    } else if (realDate == "") {
       alert("Kindly Add Event Data");
     } else if (repeat == "") {
       alert("Kindly Add Event Repeats");
@@ -67,35 +68,34 @@ export default class AddEvent extends React.Component {
     } else if (description == "") {
       alert("Kindly Add Reminder");
     } else {
-        // let storage = firebase.storage();
-        // var storageRef = storage.ref().child('Images');
-    
-        // Get a reference to store file at photos/<FILENAME>.jpg
-        // var photoRef = storageRef.child("name");
-        // Upload file to Firebase Storage
-        // var uploadTask = photoRef.put(image.uri);
-        // uploadTask.on('state_changed', null, null, function() {
-          // When the image has successfully uploaded, we get its download URL
-        //   var downloadUrl = uploadTask.snapshot.downloadURL;
-        //   console.log(downloadUrl)
-          // Set the download URL to the message box, so that the user can send it to the database
-        //   textInput.value = downloadUrl;
-        // });
+      console.log(this.state)
+      // let storage = firebase.storage();
+      // var storageRef = storage.ref().child('Images');
 
-        firebase.database()
+      // Get a reference to store file at photos/<FILENAME>.jpg
+      // var photoRef = storageRef.child("name");
+      // Upload file to Firebase Storage
+      // var uploadTask = photoRef.put(image.uri);
+      // uploadTask.on('state_changed', null, null, function() {
+      // When the image has successfully uploaded, we get its download URL
+      //   var downloadUrl = uploadTask.snapshot.downloadURL;
+      //   console.log(downloadUrl)
+      // Set the download URL to the message box, so that the user can send it to the database
+      //   textInput.value = downloadUrl;
+      // });
 
-      // function called fireabase storage and realtime database push
-        .ref("events/data/")
+      firebase.database()
+        .ref("events/")
         .push({
-          eventName: name,
-          eventDate: date,
-          eventTime: time,
-          eventRepeat: repeat,
-          eventDescription: description,
-          eventReminder: reminder
+          Name: name,
+          Date: String(realDate),
+          Time: time,
+          Repeat: repeat,
+          Description: description,
+          Reminder: reminder
         })
         .then(suc => {
-            alert("successfully pushed data");
+          alert("successfully pushed data");
           Actions.todoList()
           console.log(suc, "hogya")
         });
@@ -105,7 +105,7 @@ export default class AddEvent extends React.Component {
   onCancel() {
     this.TimePicker.close();
   }
- 
+
   onConfirm(hour, minute) {
     this.setState({ time: `${hour}:${minute}` });
     this.TimePicker.close();
@@ -226,7 +226,7 @@ export default class AddEvent extends React.Component {
                 }}
                 value={this.state.time}
                 placeholder="Event time"
-                // onChangeText={text => this.getInputsFieldValue("time", text)}
+              // onChangeText={text => this.getInputsFieldValue("time", text)}
               />
               <Icon
                 style={{
@@ -240,12 +240,12 @@ export default class AddEvent extends React.Component {
               />
             </View>
             <TimePicker
-          ref={ref => {
-            this.TimePicker = ref;
-          }}
-          onCancel={() => this.onCancel()}
-          onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
-        />
+              ref={ref => {
+                this.TimePicker = ref;
+              }}
+              onCancel={() => this.onCancel()}
+              onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
+            />
           </View>
           <View
             style={{
@@ -461,7 +461,8 @@ export default class AddEvent extends React.Component {
     console.log("=== ", date);
     console.log(moment.utc(date).format("DD/MM/YYYY"));
     this.setState({
-      date: moment.utc(date).format("DD/MM/YYYY")
+      date: moment.utc(date).format("DD/MM/YYYY"),
+      realDate: new Date(date),
     });
     console.log("A date newly has been picked: ");
     this.hideDateTimePicker();
